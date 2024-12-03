@@ -1,66 +1,70 @@
 from tkinter import *
 from tkinter import messagebox
-import pickle
 
 root = Tk()
+root.title("Викторина")
 root.geometry("500x500")
-root.title("Войти в систему")
 
-def regisrtration():
-    text = Label(text="Для входа в систему - зарегистрируйтесь")
-    text_log = Label(text="Введите ваш логи:")
-    registr_lodin = Entry()
-    text_password1 = Label(text="Введите ваш пароль:")
-    registr_password1 = Entry()
-    text_password2 = Label(text = "Еще раз пароль:")
-    registr_password2 = Entry(show="*")
-    button_registr = Button(text="Зарегистрироваться!", command=lambda: save())
-    text.pack()
-    text_log.pack()
-    registr_lodin.pack()
-    text_password1.pack()
-    registr_password1.pack()
-    text_password2.pack()
-    registr_password2.pack()
-    button_registr.pack()
+def que_one():
+    question = Label(root, text="Кто стоял во главе славянского языческого пантеона богов?")
+    answer = Entry()
+    btn = Button(root, text= "Ответить", command=lambda: game1(que_two))
+    question.grid()
+    answer.grid()
+    btn.grid()
 
-    def save():
-        login_password_save = {}
-        login_password_save[registr_lodin.get()] = registr_password1.get()
-        f = open("login.txt", "wb")
-        pickle.dump(login_password_save, f)
-        f.close()
-        login()
-
-
-def login():
-    text_log = Label(text="Поздравляем! Теперь вы можете войти в систему!")
-    text_enter_login = Label(text= "Введите ваш логин:")
-    enter_login = Entry()
-    text_enter_password = Label(text="Введите ваш пароль:")
-    enter_password = Entry(show="*")
-    button_enter = Button(text="Войти", command=lambda: log_pass())
-    text_log.pack()
-    enter_login.pack()
-    text_enter_login.pack()
-    text_enter_password.pack()
-    enter_password.pack()
-    button_enter.pack()
-
-    def log_pass():
-        f = open("login.txt", "rb")
-        a = pickle.load(f)
-        f.close()
-        if enter_login.get() in a:
-            if enter_password.get() == a[enter_login.get()]:
-                messagebox.showinfo("Вход выполнен","У вас есть сообщения!")
-            else:
-                messagebox.showerror("Ошибка!", "Неверный логин или пароль")
+    def game1(que_two):
+        if answer.get().lower() == "перун":
+            que_two()
         else:
-            messagebox.showerror("Ошибка!", "Неверный логин!")
+            messagebox.showerror("Ощибка!", "Попробуй еще раз!")
 
 
 
-regisrtration()
+def que_two():
+    question_2 = Label(root, text="В каком году произошло крещение Руси?")
+    answer_2= Entry()
+    btn_2 = Button(root, text= "Ответить", command=lambda: game2(que_three))
+    question_2.grid()
+    answer_2.grid()
+    btn_2.grid()
+
+    def game2(que_three):
+        if answer_2.get() == "988":
+            que_three()
+        else:
+            messagebox.showerror("Ощибка!", "Попробуй еще раз!")
+
+def que_three():
+    question_3 = Label(root, text="В каком году состоялась Куликовская битва?")
+    answer_3= Entry()
+    btn_3 = Button(root, text= "Ответить", command=lambda: game3(que_four))
+    question_3.grid()
+    answer_3.grid()
+    btn_3.grid()
+
+    def game3(que_four):
+        if answer_3.get() == "1380":
+            que_four()
+        else:
+            messagebox.showerror("Ощибка!", "Попробуй еще раз!")
+
+def que_four():
+    question_4 = Label(root, text="Как звали первого царя из дома Романовых?")
+    answer_4 = Entry()
+    btn_4 = Button(root, text= "Ответить", command=lambda: game4(que_four))
+    question_4.grid()
+    answer_4.grid()
+    btn_4.grid()
+
+    def game4(que_four):
+        if answer_4.get() == "Михаил":
+            messagebox.showinfo("Победа", "Ты молодец")
+        else:
+            messagebox.showerror("Ощибка!", "Попробуй еще раз!")
+
+que_one()
 
 root.mainloop()
+
+
